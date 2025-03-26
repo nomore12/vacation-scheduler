@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-# wait-for-it: db 컨테이너가 준비될 때까지 대기
+# wait-for-it: db 컨테이너가 준비될 때까지 대기 (서비스 이름과 포트를 올바르게 입력)
 /wait-for-it.sh db:5432 --timeout=30 -- echo "PostgreSQL is up"
 
 # 데이터베이스 마이그레이션 실행

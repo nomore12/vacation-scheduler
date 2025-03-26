@@ -1,3 +1,4 @@
+# Python 기반 이미지 사용
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -6,10 +7,14 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 프로젝트 파일 복사 (여기서 . 전체를 복사하면 /app에 마운트되는 경우 덮어쓰기가 발생할 수 있음)
+# 프로젝트 파일 복사
 COPY . .
 
-# entrypoint 스크립트 복사 및 권한 부여 (다른 경로에 저장하여 볼륨 마운트 영향에서 벗어남)
+# wait-for-it.sh 스크립트 복사 및 실행 권한 부여 (루트에 복사)
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
+# entrypoint 스크립트 복사 및 권한 부여 (이미지 내부 별도 경로)
 COPY entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
